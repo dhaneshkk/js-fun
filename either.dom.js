@@ -1,5 +1,5 @@
-var _ = require("ramda");
-
+var _ = R;
+var moment = moment;
 var Left = function(x) {
   this.__value = x;
 }
@@ -34,7 +34,6 @@ Container (a.k.a Identity). The power comes from the ability to embed an error m
 *
 */
 
-var moment = require('moment');
 //  getAge :: Date -> User -> Either(String, Number)
 var getAge = _.curry(function(now, user) {
 var birthdate = moment(user.birthdate, 'YYYY-MM-DD');
@@ -56,10 +55,10 @@ var add = _.curry(function(x,y){return x+y;});
 var fortune  = _.compose(_.concat("If you survive, you will be "), add(1));
 //  zoltar :: User -> _
 var zoltar = _.compose(console.log, either(id, fortune), getAge(moment()));
-zoltar({birthdate: '2005-12-12'});
+//zoltar({birthdate: '2005-12-12'});
 // "If you survive, you will be 10"
 // undefined
-zoltar({birthdate: 'balloons!'});
+//zoltar({birthdate: 'balloons!'});
 // "Birth date could not be parsed"
 // undefined
 var IO = function(f) {
@@ -83,4 +82,4 @@ io_window.map(_.prop('location')).map(_.prop('href')).map(_.split('/'));// IO(["
 var $ = function(selector) {
 return new IO(function(){ return document.querySelectorAll(selector); });
 }
-$('#myDiv').map(_.head).map(function(div){ return div.innerHTML; }); // IO('I am some inner html')
+$('#myDiv').map(_.head).map(function(div){ return div.innerHTML; });
